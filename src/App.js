@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { GlobalContextProvider } from './context/GlobalContext'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Layout from './theme/ThemeProvider'
+import Header from './components/Header'
+import DashboardPage from './components/DashboardPage'
+import GroupPage from './components/GroupPage'
+import TrackerPage from './components/TrackerPage'
+import ChartsPage from './components/ChartsPage'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+	return (
+		<GlobalContextProvider>
+			<BrowserRouter>
+				<Layout>
+					<Header />
+					<Switch>
+						<Route
+							exact
+							path='/'
+							component={DashboardPage}
+						/>
+						<Route
+							path='/:group'
+							exact
+							component={GroupPage}
+						/>
+						<Route
+							path='/:group/:tracker'
+							exact
+							component={TrackerPage}
+						/>
+						<Route
+							path='/:group/:tracker/charts'
+							component={ChartsPage}
+						/>
+					</Switch>
+				</Layout>
+			</BrowserRouter>
+		</GlobalContextProvider>
+	)
 }
 
-export default App;
+export default App
