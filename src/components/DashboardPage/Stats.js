@@ -4,6 +4,8 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
 	height: 90vh;
+	overflow-y: auto;
+	border-left: 1px solid ${props => props.theme.colors.dark};
 `
 const List = styled.ul`
 	display: flex;
@@ -46,6 +48,8 @@ const Stats = () => {
 							}}
 						>
 							{el.maxValue}
+							<span>vs </span>
+							{el.lastRecordValue}
 							<small style={{ color: 'red' }}>
 								{el.diffLastVsMaxPc === '-'
 									? '-'
@@ -54,16 +58,6 @@ const Stats = () => {
 									: `${el.diffLastVsMaxPc.toFixed(
 											1
 									  )}%`}
-							</small>
-							<span>vs </span>
-							{el.lastRecordValue}
-							<small style={{ color: 'red' }}>
-								{el.diffLastVsPrevPc === '-'
-									? '-'
-									: el.diffLastVsPrevPc.toFixed(
-											1
-									  )}{' '}
-								%
 							</small>
 						</p>
 					</ListItem>

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import { useLocation } from 'react-router-dom'
 import DatePicker from 'react-date-picker'
-import Dropdown from './Dropdown'
+import Dropdown from '../Dropdown'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 
@@ -17,10 +17,18 @@ const Form = styled.form`
 	height: 10vh;
 	padding: 0 0.7em;
 `
-const Label = styled.label``
+const Label = styled.label`
+	margin: auto;
+`
 const Input = styled.input`
 	padding: 0.5em;
+	max-width: 90%;
 `
+const Button = styled.button`
+	margin: auto;
+	padding: 0.5em 1em;
+`
+
 const AddRecordForm = () => {
 	const { trackers, addRecord } = useContext(GlobalContext)
 
@@ -68,14 +76,18 @@ const AddRecordForm = () => {
 		}
 	}
 
+	const handleSelect = item => {
+		setSelectedTracker(JSON.stringify(item))
+		setHeaderTitle(item.name)
+	}
+
 	return (
 		<Form onSubmit={handleSubmit} location={location}>
 			{location.pathname === '/' && (
 				<Dropdown
 					values={trackers}
 					currentValue={headerTitle}
-					setValue={setSelectedTracker}
-					setHeader={setHeaderTitle}
+					handleSelect={handleSelect}
 				/>
 			)}
 			<Label>
@@ -102,7 +114,7 @@ const AddRecordForm = () => {
 					onChange={e => setNote(e.target.value)}
 				/>
 			</Label>
-			<button>Add record</button>
+			<Button>Add record</Button>
 		</Form>
 	)
 }

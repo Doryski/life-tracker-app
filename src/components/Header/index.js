@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link as RouteLink } from 'react-router-dom'
 
 const HeaderWrapper = styled.div`
-	// background: ${props => props.theme.colors.secondary};
+	background: ${props => props.theme.colors.primary};
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

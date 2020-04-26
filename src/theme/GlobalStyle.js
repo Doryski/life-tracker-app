@@ -3,10 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
     body {
         font-family: 'Open Sans', sans-serif;
-        // background: ${props => props.theme.colors.primary};
-    }
-    div, section {
-        border: 1px dotted black;
+        background: ${props => props.theme.colors.light};
     }
 
     #root {
@@ -37,16 +34,20 @@ const GlobalStyle = createGlobalStyle`
 
     button {
         cursor: pointer;
-        // background: ${props => props.theme.colors.primary};
         text-align: center;
-        // color: ${props => props.theme.colors.dark};
-        border: 1px solid black;
+        border: none;
+        background: none;
+        font-family: inherit;
+        &:hover {
+            background: ${props => props.theme.colors.primary};
+        }
     }
     
     input, select {
-        // border: none;
-        // background: ${props => props.theme.colors.primary};
-        // color: ${props => props.theme.colors.dark};
+        font-family: inherit;
+        border: none;
+        border-bottom: 2px solid ${props => props.theme.colors.dark2};
+        background: ${props => props.theme.colors.primary};
     }
 
     label, p, h1, h2, h3, h4, h5, h6 {

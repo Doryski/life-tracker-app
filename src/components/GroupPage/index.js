@@ -1,24 +1,25 @@
 import React from 'react'
 import LeftNav from '../LeftNav'
-import AddTrackerForm from '../AddTrackerForm'
+import AddTrackerForm from '../forms/AddTrackerForm'
 import PageWrapper from '../StyledComponents/PageWrapper'
+import UnderDev from '../StyledComponents/UnderDev'
+import styled from 'styled-components'
+
+const MainSection = styled.section`
+	display: grid;
+	grid-template-rows: 10vh 80vh;
+	height: 90vh;
+`
 
 const GroupPage = () => {
 	return (
 		<PageWrapper>
 			<LeftNav />
-			<section>
+			<MainSection>
 				<AddTrackerForm />
-				<div className='big-chart'>
-					{/* Total change for group of trackers (raw or %) */}
-				</div>
-				<div className='small-chart'>
-					{/* Change for group of trackers (raw or %) */}
-				</div>
-			</section>
-			<section>
-				{/* avg, latest, best change, worst change, total change % */}
-			</section>
+				<UnderDev>Under development</UnderDev>
+			</MainSection>
+			<UnderDev>Under development</UnderDev>
 		</PageWrapper>
 	)
 }

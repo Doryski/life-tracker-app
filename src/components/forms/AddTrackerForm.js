@@ -1,6 +1,21 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import { useLocation } from 'react-router-dom'
+import styled from 'styled-components'
+
+const Form = styled.form`
+	display: grid;
+	grid-template-columns: repeat(2, 1fr) 20%;
+`
+const Label = styled.label`
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+`
+const Input = styled.input`
+	padding: 0.5em 1em;
+	max-width: 90%;
+`
 
 const AddTrackerForm = () => {
 	const { groups, addTracker } = useContext(GlobalContext)
@@ -27,25 +42,25 @@ const AddTrackerForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>
+		<Form onSubmit={handleSubmit}>
+			<Label>
 				Tracker name
-				<input
+				<Input
 					type='text'
 					value={trackerName}
 					onChange={e => setTrackerName(e.target.value)}
 				/>
-			</label>
-			<label>
+			</Label>
+			<Label>
 				Tracker unit
-				<input
+				<Input
 					type='text'
 					value={unit}
 					onChange={e => setUnit(e.target.value)}
 				/>
-			</label>
+			</Label>
 			<button>Add tracker</button>
-		</form>
+		</Form>
 	)
 }
 

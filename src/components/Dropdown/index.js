@@ -5,34 +5,31 @@ import List from './List'
 
 const Wrapper = styled.div`
 	display: block;
-	z-index: 10;
+	margin: auto;
+	position: relative;
+	width: 100%;
+	max-width: ${props => props.maxWidth};
 `
 
 const Dropdown = ({
 	values = [],
-	open = false,
 	showCheckmark = true,
 	currentValue,
-	setValue,
-	setHeader,
+	handleSelect,
+	maxWidth = '100%',
 }) => {
-	const [isOpen, setIsOpen] = useState(open)
+	const [isOpen, setIsOpen] = useState(false)
 
 	const toggleList = () => setIsOpen(!isOpen)
 
-	const selectItem = item => {
-		setValue(JSON.stringify(item))
-		setHeader(item.name)
-	}
-
 	return (
-		<Wrapper onClick={toggleList}>
+		<Wrapper onClick={toggleList} maxWidth={maxWidth}>
 			<Header headerTitle={currentValue} isOpen={isOpen} />
 			<List
 				showCheckmark={showCheckmark}
 				headerTitle={currentValue}
 				items={values}
-				selectItem={selectItem}
+				selectItem={handleSelect}
 				isOpen={isOpen}
 			/>
 		</Wrapper>

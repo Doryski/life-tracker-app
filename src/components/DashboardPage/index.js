@@ -1,7 +1,7 @@
 import React from 'react'
 import PageWrapper from '../StyledComponents/PageWrapper'
 import LeftNav from '../LeftNav/'
-import AddRecordForm from '../AddRecordForm'
+import AddRecordForm from '../forms/AddRecordForm'
 import Stats from './Stats'
 import { avg } from '../../functions/array'
 import { useContext } from 'react'

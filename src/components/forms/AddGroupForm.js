@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import { Close } from '@styled-icons/zondicons'
 import styled from 'styled-components'
 

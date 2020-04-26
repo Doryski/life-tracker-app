@@ -32,6 +32,7 @@ const App = () => {
 						/>
 						<Route
 							path='/:group/:tracker/charts'
+							exact
 							component={ChartsPage}
 						/>
 					</Switch>

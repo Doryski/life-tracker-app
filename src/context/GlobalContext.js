@@ -9,6 +9,8 @@ import moment, { max as maxDate, min as minDate } from 'moment'
 export const GlobalContext = createContext()
 
 export const GlobalContextProvider = ({ children }) => {
+	useEffect(() => alert('This app is under development'), [])
+
 	// groups
 	const [groups, setGroups] = useState(groupsInit)
 	const [trackers, setTrackers] = useState(trackersInit)
@@ -77,8 +79,6 @@ export const GlobalContextProvider = ({ children }) => {
 		const recordsData = JSON.parse(
 			localStorage.getItem('records')
 		)
-
-		console.log(recordsData)
 		if (recordsData) {
 			return setRecords(recordsData)
 		}
@@ -110,7 +110,7 @@ export const GlobalContextProvider = ({ children }) => {
 
 		return setRecords(updated)
 	}
-	// change records data to object: { trackerID: { records: [ { record },... ] } }
+	// changes records data to object: { trackerID: { records: [ { record }, ... ] } }
 	let trackersRecords = {}
 	for (let tracker of trackers) {
 		const currentId = tracker.id
@@ -124,7 +124,7 @@ export const GlobalContextProvider = ({ children }) => {
 		trackersRecords[currentId] = { records: recordsArray }
 	}
 
-	// change records data to object: { trackerID: { values: [recordValues], dates: [recordDates], ids: [recordIds] }
+	// changes records data to object: { trackerID: { values: [recordValues], dates: [recordDates], ids: [recordIds] }, ... }
 	let trackersValues = {}
 	for (let tracker of trackers) {
 		const currentId = tracker.id
@@ -142,7 +142,7 @@ export const GlobalContextProvider = ({ children }) => {
 		trackersValues[currentId] = { values, dates, ids }
 	}
 
-	////
+	// stores info about every tracker in array
 	const trackersStats = trackers.map(tracker => {
 		const trackerObj = trackersValues[tracker.id]
 		const { dates, values } = trackerObj
@@ -178,7 +178,6 @@ export const GlobalContextProvider = ({ children }) => {
 				? '-'
 				: (diffLastVsPrev / secondLastRecordValue) * 100
 		const diffLastVsFirst = lastRecordValue - firstRecordValue
-		console.log(lastRecordDate, firstRecordValue)
 		const diffLastVsFirstPc =
 			+firstRecordValue === 0
 				? '-'

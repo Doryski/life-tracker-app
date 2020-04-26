@@ -1,19 +1,20 @@
 import React, { useContext } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
-import { Link, useLocation } from 'react-router-dom'
+import { GlobalContext } from '../../context/GlobalContext'
+import { Link as RouteLink, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
 
-const List = styled.ul`
-	
-`
+const List = styled.ul``
 
 const ListItem = styled.li`
 	display: grid;
 	grid-template-columns: 80% 20%;
 `
-const StyledLink = styled(Link)`
-	padding: 0.5em 1em;
+const Link = styled(RouteLink)`
+	padding: 1em;
+	&:hover {
+		background: ${props => props.theme.colors.light};
+	}
 `
 
 const TrackersList = () => {
@@ -28,19 +29,18 @@ const TrackersList = () => {
 				)
 				.map(tracker => (
 					<ListItem key={tracker.id}>
-						<StyledLink
+						<Link
 							to={`/${tracker.groupName}/${tracker.name}`}
 						>
-							{tracker.name} <br />
-							<small> Group: {tracker.groupName}</small>
-						</StyledLink>
+							{tracker.name}
+						</Link>
 						<button
 							onClick={() => removeTracker(tracker.id)}
 						>
 							<Close size='20' />
 						</button>
 					</ListItem>
-			))}
+				))}
 		</List>
 	)
 }

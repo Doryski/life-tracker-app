@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import moment from 'moment'
 import styled from 'styled-components'
+import Dropdown from '../Dropdown'
 
 const ChartWrapper = styled.div`
 	display: flex;
@@ -23,15 +24,18 @@ const ChartWrapper = styled.div`
 		margin: auto;
 	}
 `
-const Select = styled.select`
-	margin: auto;
-`
 
 const BigChart = () => {
 	const { trackersRecords, trackers } = useContext(GlobalContext)
 	const [selectedTracker, setSelectedTracker] = useState(
 		trackers[0].id
 	)
+	const headerInit = 'Select tracker...'
+	const [headerTitle, setHeaderTitle] = useState(headerInit)
+	const handleSelect = item => {
+		setSelectedTracker(item.id)
+		setHeaderTitle(item.name)
+	}
 	const data = [
 		...trackersRecords[selectedTracker].records,
 	].sort((a, b) =>
@@ -45,19 +49,12 @@ const BigChart = () => {
 
 	return (
 		<ChartWrapper className='big-chart'>
-			<Select
-				value={selectedTracker}
-				onChange={e => setSelectedTracker(e.target.value)}
-			>
-				{trackers.map(tracker => (
-					<option
-						key={tracker.dateCreated}
-						value={tracker.id}
-					>
-						{tracker.name}
-					</option>
-				))}
-			</Select>
+			<Dropdown
+				values={trackers}
+				currentValue={headerTitle}
+				handleSelect={handleSelect}
+				maxWidth='200px'
+			/>
 			<LineChart width={730} height={300} data={data}>
 				<CartesianGrid strokeDasharray='3 3' />
 				<XAxis dataKey='dateCreated' />

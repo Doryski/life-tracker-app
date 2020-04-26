@@ -1,16 +1,14 @@
 import React from 'react'
 import LeftNav from '../LeftNav'
 import PageWrapper from '../StyledComponents/PageWrapper'
+import UnderDev from '../StyledComponents/UnderDev'
 
 const ChartsPage = () => {
 	return (
 		<PageWrapper>
 			<LeftNav />
-			<div>
-				<section>Line chart total change (raw or %)</section>
-				<section>line chart change (raw or %)</section>
-			</div>
-			<section>list of all available option and charts</section>
+			<UnderDev>Under Development</UnderDev>
+			<UnderDev>Under Development</UnderDev>
 		</PageWrapper>
 	)
 }

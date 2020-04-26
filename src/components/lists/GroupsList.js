@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import { Link as RouteLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
@@ -12,7 +12,7 @@ const Link = styled(RouteLink)`
 	display: block;
 	padding: 1em;
 	&:hover {
-		// background: grey;
+		background: ${props => props.theme.colors.light};
 	}
 `
 const Button = styled.button``

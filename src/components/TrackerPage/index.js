@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import PageWrapper from '../StyledComponents/PageWrapper'
 import LeftNav from '../LeftNav'
 import { Link, useLocation } from 'react-router-dom'
-import RecordsList from '../RecordsList'
-import AddRecordForm from '../AddRecordForm'
+import RecordsList from '../lists/RecordsList'
+import AddRecordForm from '../forms/AddRecordForm'
 import { GlobalContext } from '../../context/GlobalContext'
 
 const TrackerPage = () => {

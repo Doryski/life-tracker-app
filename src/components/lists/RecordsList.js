@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { GlobalContext } from '../../context/GlobalContext'
 import styled from 'styled-components'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
@@ -21,7 +21,6 @@ const RecordsList = () => {
 
 	return (
 		<List>
-			{/* add filtering, sorting and pagination */}
 			{[...records]
 				.filter(record => {
 					const tracker = JSON.parse(record.tracker)
