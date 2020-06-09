@@ -55,7 +55,7 @@ const Stats = () => {
 									? '-'
 									: +el.diffLastVsMaxPc === 0
 									? 'MAX'
-									: `${el.diffLastVsMaxPc.toFixed(
+									: `${(+el.diffLastVsMaxPc).toFixed(
 											1
 									  )}%`}
 							</small>

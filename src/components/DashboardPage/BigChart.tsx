@@ -13,6 +13,7 @@ import {
 import moment from 'moment'
 import styled from 'styled-components'
 import Dropdown from '../Dropdown'
+import Tracker from '../../interfaces/Tracker'
 
 const ChartWrapper = styled.div`
 	display: flex;
@@ -32,7 +33,7 @@ const BigChart = () => {
 	)
 	const headerInit = 'Select tracker...'
 	const [headerTitle, setHeaderTitle] = useState(headerInit)
-	const handleSelect = item => {
+	const handleSelect = (item: Tracker) => {
 		setSelectedTracker(item.id)
 		setHeaderTitle(item.name)
 	}

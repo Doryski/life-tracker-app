@@ -10,11 +10,11 @@ const TrackerPage = () => {
 	const location = useLocation()
 	const { trackersStats } = useContext(GlobalContext)
 	const currentTracker = location.pathname.split('/')
-	const currentTrackerStats = trackersStats.find(
+	const currentTrackerStats = trackersStats.filter(
 		tracker =>
 			tracker.trackerName === currentTracker[2] &&
 			tracker.trackerGroupName === currentTracker[1]
-	)
+	)[0]
 
 	return (
 		<PageWrapper>
@@ -43,7 +43,7 @@ const TrackerPage = () => {
 					</li>
 					<li>
 						total change %:{' '}
-						{currentTrackerStats.diffLastVsFirstPc.toFixed(
+						{(+currentTrackerStats.diffLastVsFirstPc).toFixed(
 							1
 						)}
 						%

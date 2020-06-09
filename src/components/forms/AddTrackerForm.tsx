@@ -18,11 +18,11 @@ const Input = styled.input`
 `
 
 const AddTrackerForm = () => {
-	const { groups, addTracker } = useContext(GlobalContext)
+	const { groups, addTracker, trackers } = useContext(GlobalContext)
 	const location = useLocation()
-	const currentPageGroup = groups.find(group =>
+	const currentPageGroup = groups.filter(group =>
 		location.pathname.includes(`${group.name}`)
-	).name
+	)[0].name
 	const [trackerName, setTrackerName] = useState('')
 	const [selectedGroup, setSelectedGroup] = useState(
 		currentPageGroup
@@ -33,12 +33,21 @@ const AddTrackerForm = () => {
 		setSelectedGroup(currentPageGroup)
 	}, [currentPageGroup])
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		addTracker(selectedGroup, trackerName, unit)
-		setSelectedGroup(currentPageGroup)
-		setTrackerName('')
-		setUnit('')
+		if (!trackerName) alert('Tracker name cannot be null')
+		else if (!trackerName.match(/^[a-zA-Z0-9]+$/))
+			alert('Tracker name can only inlude letters')
+		else if (
+			trackers.find(tracker => tracker.name === trackerName)
+		)
+			alert('Tracker of this name already exists')
+		else {
+			addTracker(selectedGroup, trackerName, unit)
+			setSelectedGroup(currentPageGroup)
+			setTrackerName('')
+			setUnit('')
+		}
 	}
 
 	return (

@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import Header from './Header'
 import List from './List'
-
-const Wrapper = styled.div`
-	display: block;
-	margin: auto;
-	position: relative;
-	width: 100%;
-	max-width: ${props => props.maxWidth};
-`
+import { Wrapper } from './StyledHeader'
+import DropdownPropsTypes from '../../interfaces/DropdownPropsTypes'
 
 const Dropdown = ({
 	values = [],
@@ -17,11 +10,9 @@ const Dropdown = ({
 	currentValue,
 	handleSelect,
 	maxWidth = '100%',
-}) => {
+}: DropdownPropsTypes) => {
 	const [isOpen, setIsOpen] = useState(false)
-
 	const toggleList = () => setIsOpen(!isOpen)
-
 	return (
 		<Wrapper onClick={toggleList} maxWidth={maxWidth}>
 			<Header headerTitle={currentValue} isOpen={isOpen} />

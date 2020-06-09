@@ -3,9 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import theme from './index'
 import GlobalStyle from './GlobalStyle'
 
-
-
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: any }) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<>

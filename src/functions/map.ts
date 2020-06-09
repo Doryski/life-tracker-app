@@ -1,4 +1,10 @@
-const map = (value, minValue, maxValue, minTarget, maxTarget) => {
+const map = (
+	value: number,
+	minValue: number,
+	maxValue: number,
+	minTarget: number,
+	maxTarget: number
+) => {
 	const diffValue = maxValue - minValue
 	const slice = value / diffValue
 	const diffTarget = maxTarget - minTarget

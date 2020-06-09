@@ -16,16 +16,23 @@ const ListItem = styled.li`
 	padding: 1em;
 `
 const RecordsList = () => {
-	const { records, removeRecord } = useContext(GlobalContext)
+	const { records, removeRecord, trackers } = useContext(
+		GlobalContext
+	)
 	const location = useLocation()
 
 	return (
 		<List>
 			{[...records]
 				.filter(record => {
-					const tracker = JSON.parse(record.tracker)
+					const trackerGroupName = trackers.find(
+						t => t.id === record.trackerId
+					)?.groupName
+					const trackerName = trackers.find(
+						t => t.id === record.trackerId
+					)?.name
 					return location.pathname.includes(
-						`${tracker.groupName}/${tracker.name}`
+						`${trackerGroupName}/${trackerName}`
 					)
 				})
 				.sort((a, b) =>

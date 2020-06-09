@@ -1,8 +1,13 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../../context/GlobalContext'
-import { Link as RouteLink, useLocation } from 'react-router-dom'
+import {
+	Link as RouteLink,
+	useLocation,
+	useHistory,
+} from 'react-router-dom'
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
+import Tracker from '../../interfaces/Tracker'
 
 const List = styled.ul``
 
@@ -18,9 +23,30 @@ const Link = styled(RouteLink)`
 `
 
 const TrackersList = () => {
-	const { trackers, removeTracker } = useContext(GlobalContext)
+	const {
+		trackers,
+		removeTracker,
+		records,
+		setRecords,
+	} = useContext(GlobalContext)
 	const location = useLocation()
-
+	const history = useHistory()
+	const handleRemoveBtnClick = (tracker: Tracker) => {
+		let confirmation = window.confirm(
+			`Do you want to delete tracker ${tracker.name} of group ${tracker.groupName} and all its records?`
+		)
+		if (confirmation) {
+			history.push(`/${tracker.groupName}`)
+			removeTracker(tracker.id)
+			const updatedRecords = records.filter(record => {
+				const trackerName = trackers.find(
+					t => t.id === record.trackerId
+				)?.name
+				return trackerName === tracker.name
+			})
+			setRecords(updatedRecords)
+		}
+	}
 	return (
 		<List>
 			{trackers
@@ -35,7 +61,9 @@ const TrackersList = () => {
 							{tracker.name}
 						</Link>
 						<button
-							onClick={() => removeTracker(tracker.id)}
+							onClick={() =>
+								handleRemoveBtnClick(tracker)
+							}
 						>
 							<Close size='20' />
 						</button>

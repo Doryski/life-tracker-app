@@ -1,4 +1,4 @@
-export default {
+const theme = {
 	colors: {
 		light: '#F4EDEF',
 		primary: '#B09E99',
@@ -16,3 +16,7 @@ export default {
 		tablet: '@media (max-width: 1024px)',
 	},
 }
+
+export type ThemeType = typeof theme
+
+export default theme

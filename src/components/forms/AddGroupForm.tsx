@@ -14,23 +14,30 @@ const Input = styled.input`
 
 const Button = styled.button``
 
-const AddGroupForm = ({ setShowForm }) => {
-	const { addGroup } = useContext(GlobalContext)
+const AddGroupForm = ({
+	setShowForm,
+}: {
+	setShowForm: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
+	const { addGroup, groups } = useContext(GlobalContext)
 	const [groupName, setGroupName] = useState('')
-	const handleSubmit = e => {
+	const handleSubmit = (e: any) => {
 		e.preventDefault()
-		if (!groupName) {
-			alert('Group name cannot be null')
-		} else if (!groupName.match(/^[a-zA-Z]+$/)) {
+		if (!groupName) alert('Group name cannot be null')
+		else if (!groupName.match(/^[a-zA-Z]+$/))
 			alert('Group name can only inlude letters')
-		} else {
+		else if (groups.find(group => group.name === groupName))
+			alert('Group of this name already exists')
+		else {
 			addGroup(groupName)
 			setGroupName('')
 			setShowForm(false)
 		}
 	}
 
-	const handleGroupNameChange = e => setGroupName(e.target.value)
+	const handleGroupNameChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => setGroupName(e.target.value)
 
 	return (
 		<Form onSubmit={handleSubmit}>

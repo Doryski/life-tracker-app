@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
+import { ThemeType } from '.'
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     body {
         font-family: 'Open Sans', sans-serif;
         background: ${props => props.theme.colors.light};

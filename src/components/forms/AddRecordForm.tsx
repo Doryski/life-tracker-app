@@ -5,12 +5,14 @@ import DatePicker from 'react-date-picker'
 import Dropdown from '../Dropdown'
 import styled from 'styled-components'
 import { useEffect } from 'react'
+import Tracker from '../../interfaces/Tracker'
 
 const Form = styled.form`
 	display: grid;
 	grid-template-columns:
 		repeat(
-			${props => (props.location.pathname === '/' ? '4' : '3')},
+			${(props: { location: { pathname: string } }) =>
+				props.location.pathname === '/' ? '4' : '3'},
 			1fr
 		)
 		10%;
@@ -32,52 +34,49 @@ const Button = styled.button`
 const AddRecordForm = () => {
 	const { trackers, addRecord } = useContext(GlobalContext)
 
-	const [selectedTracker, setSelectedTracker] = useState('')
+	const [selectedTracker, setSelectedTracker] = useState(0)
 	const headerInit = 'Select tracker...'
 	const [headerTitle, setHeaderTitle] = useState(headerInit)
 	const [dateCreated, setDateCreated] = useState(new Date())
-	const [value, setValue] = useState('')
+	const [value, setValue] = useState(0)
 	const [note, setNote] = useState('')
 	const location = useLocation()
 
-	const currentPageTracker = trackers.find(tracker =>
+	const currentPageTracker = trackers.filter(tracker =>
 		location.pathname.includes(
 			`${tracker.groupName}/${tracker.name}`
 		)
-	)
+	)[0]
 
 	useEffect(() => {
-		if (location.pathname !== '/') {
-			setSelectedTracker(JSON.stringify(currentPageTracker))
-		}
+		if (location.pathname !== '/')
+			setSelectedTracker(currentPageTracker.id)
 	}, [location.pathname, currentPageTracker])
 
-	const handleSubmit = e => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		if (!selectedTracker) {
-			alert('Select tracker to add record')
-		} else if (!value) {
-			alert('Value cannot be empty')
-		} else {
+		if (!selectedTracker) alert('Select tracker to add record')
+		else if (!value) alert('Value cannot be empty')
+		else {
 			addRecord(selectedTracker, dateCreated, value, note)
-			setSelectedTracker(JSON.stringify(currentPageTracker))
+			setSelectedTracker(currentPageTracker.id)
 			setHeaderTitle(headerInit)
 			setDateCreated(new Date())
-			setValue('')
+			setValue(0)
 			setNote('')
 		}
 	}
 
-	const onValueChange = e => {
+	const onValueChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		const num = e.target.value
-		if (!num || num.match(/^\d{1,}(\.\d{0,2})?$/)) {
-			setValue(num)
-		}
+		if (!num || num.match(/^\d{1,}(\.\d{0,2})?$/)) setValue(+num)
 	}
 
-	const handleSelect = item => {
-		setSelectedTracker(JSON.stringify(item))
+	const handleSelect = (item: Tracker) => {
+		setSelectedTracker(item.id)
 		setHeaderTitle(item.name)
 	}
 
@@ -93,7 +92,9 @@ const AddRecordForm = () => {
 			<Label>
 				Date
 				<DatePicker
-					onChange={date => setDateCreated(date)}
+					onChange={date =>
+						setDateCreated(date)
+					}
 					value={dateCreated}
 					format='dd.MM.y'
 				/>

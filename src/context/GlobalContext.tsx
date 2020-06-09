@@ -4,35 +4,76 @@ import groupsInit from '../initialState/groups'
 import trackersInit from '../initialState/trackers'
 import recordsInit from '../initialState/records'
 import { max, min, avg, sum } from '../functions/array'
-import moment, { max as maxDate, min as minDate } from 'moment'
+import moment, {
+	max as maxDate,
+	min as minDate,
+	Moment,
+} from 'moment'
+import Tracker from '../interfaces/Tracker'
+import Record from '../interfaces/Record'
+import Group from '../interfaces/Group'
+import TrackerValues from '../interfaces/TrackersValues'
+import TrackerRecords from '../interfaces/TrackersRecords'
+import TrackerStat from '../interfaces/TrackerStat'
+import ContextProviderTypes from '../interfaces/ContextProviderTypes'
 
-export const GlobalContext = createContext()
+const contextInit: ContextProviderTypes = {
+	groups: [],
+	addGroup: () => {},
+	removeGroup: () => {},
+	trackers: [],
+	addTracker: () => {},
+	updateTrackerGroup: () => {
+		return {
+			groupName: '',
+			id: 0,
+			name: '',
+			unit: '',
+		}
+	},
+	removeTracker: () => {},
+	setTrackers: () => {},
+	records: [],
+	addRecord: () => {},
+	removeRecord: () => {},
+	setRecords: () => {},
+	trackersRecords: {},
+	trackersValues: {},
+	trackersStats: [],
+	UNASSIGNED_GROUP_NAME: '',
+}
+export const GlobalContext = createContext(contextInit)
 
-export const GlobalContextProvider = ({ children }) => {
-	useEffect(() => alert('This app is under development'), [])
-
+export const GlobalContextProvider = ({
+	children,
+}: {
+	children: any
+}) => {
+	// useEffect(() => alert('This app is under development'), [])
+	const UNASSIGNED_GROUP_NAME = 'Unassigned'
 	// groups
 	const [groups, setGroups] = useState(groupsInit)
 	const [trackers, setTrackers] = useState(trackersInit)
 	const [records, setRecords] = useState(recordsInit)
 
 	useEffect(() => {
-		const groupsData = JSON.parse(localStorage.getItem('groups'))
+		const groupsString: any = localStorage.getItem('groups')
+		const groupsData: Group[] = JSON.parse(groupsString)
 
-		if (groupsData) {
-			return setGroups(groupsData)
-		}
+		if (groupsData) setGroups(groupsData)
 	}, [])
 
 	useEffect(() => {
 		localStorage.setItem('groups', JSON.stringify(groups))
+		console.log(groups)
 	}, [groups])
 
 	// add group
-	const addGroup = name => setGroups([{ name }, ...groups])
+	const addGroup = (name: string) =>
+		setGroups([{ name }, ...groups])
 
 	// remove group
-	const removeGroup = name => {
+	const removeGroup = (name: string) => {
 		const updated = groups.filter(group => group.name !== name)
 
 		return setGroups(updated)
@@ -41,25 +82,27 @@ export const GlobalContextProvider = ({ children }) => {
 
 	// trackers
 	useEffect(() => {
-		const trackersData = JSON.parse(
-			localStorage.getItem('trackers')
-		)
+		const trackersString: any = localStorage.getItem('trackers')
+		const trackersData: Tracker[] = JSON.parse(trackersString)
 
-		if (trackersData) {
-			return setTrackers(trackersData)
-		}
+		if (trackersData) setTrackers(trackersData)
 	}, [])
 
 	useEffect(() => {
 		localStorage.setItem('trackers', JSON.stringify(trackers))
+		console.log(trackers)
 	}, [trackers])
 
 	// add tracker
-	const addTracker = (groupName, trackerName, unit) =>
+	const addTracker = (
+		groupName: string,
+		trackerName: string,
+		unit: string
+	) =>
 		setTrackers([
 			{
 				id: uuid(),
-				groupName: groupName || 'Other',
+				groupName: groupName || UNASSIGNED_GROUP_NAME,
 				name: trackerName,
 				unit,
 			},
@@ -67,33 +110,46 @@ export const GlobalContextProvider = ({ children }) => {
 		])
 
 	// remove tracker
-	const removeTracker = id => {
+	const removeTracker = (id: number) => {
 		const updated = trackers.filter(tracker => tracker.id !== id)
 
 		return setTrackers(updated)
 	}
+	const updateTrackerGroup = (
+		tracker: Tracker,
+		newGroupName = UNASSIGNED_GROUP_NAME
+	) => {
+		return {
+			...tracker,
+			groupName: newGroupName,
+		}
+	}
+
 	// end trackers
 
 	// records
 	useEffect(() => {
-		const recordsData = JSON.parse(
-			localStorage.getItem('records')
-		)
-		if (recordsData) {
-			return setRecords(recordsData)
-		}
+		const recordsString: any = localStorage.getItem('records')
+		const recordsData: Record[] = JSON.parse(recordsString)
+		if (recordsData) setRecords(recordsData)
 	}, [])
 
 	useEffect(() => {
 		localStorage.setItem('records', JSON.stringify(records))
+		console.log(records)
 	}, [records])
 
 	// add record
-	const addRecord = (tracker, dateCreated, value, note) => {
+	const addRecord = (
+		trackerId: number,
+		dateCreated: Date,
+		value: number,
+		note: string
+	) => {
 		return setRecords([
 			{
 				id: uuid(),
-				tracker,
+				trackerId,
 				dateCreated:
 					moment(dateCreated).format('DD.MM.YYYY') ||
 					moment().format('DD.MM.YYYY'),
@@ -105,45 +161,43 @@ export const GlobalContextProvider = ({ children }) => {
 	}
 
 	// remove record
-	const removeRecord = id => {
+	const removeRecord = (id: number) => {
 		const updated = records.filter(record => record.id !== id)
 
 		return setRecords(updated)
 	}
 	// changes records data to object: { trackerID: { records: [ { record }, ... ] } }
-	let trackersRecords = {}
-	for (let tracker of trackers) {
+	let trackersRecords: TrackerRecords = {}
+	trackers.forEach(tracker => {
 		const currentId = tracker.id
-		const recordsArray = []
-		for (let record of records) {
-			const t = JSON.parse(record.tracker)
-			if (currentId === t.id) {
+		const recordsArray: Record[] = []
+		records.forEach(record => {
+			if (currentId === record.trackerId) {
 				recordsArray.push(record)
 			}
-		}
+		})
 		trackersRecords[currentId] = { records: recordsArray }
-	}
+	})
 
 	// changes records data to object: { trackerID: { values: [recordValues], dates: [recordDates], ids: [recordIds] }, ... }
-	let trackersValues = {}
-	for (let tracker of trackers) {
+	let trackersValues: TrackerValues = {}
+	trackers.forEach(tracker => {
 		const currentId = tracker.id
-		const values = []
-		const dates = []
-		const ids = []
-		for (let record of records) {
-			const t = JSON.parse(record.tracker)
-			if (currentId === t.id) {
+		const values: number[] = []
+		const dates: Moment[] = []
+		const ids: number[] = []
+		records.forEach(record => {
+			if (currentId === record.trackerId) {
 				values.push(record.value)
 				dates.push(moment(record.dateCreated, 'DD.MM.YYYY'))
 				ids.push(record.id)
 			}
-		}
+		})
 		trackersValues[currentId] = { values, dates, ids }
-	}
+	})
 
 	// stores info about every tracker in array
-	const trackersStats = trackers.map(tracker => {
+	const trackersStats: TrackerStat[] = trackers.map(tracker => {
 		const trackerObj = trackersValues[tracker.id]
 		const { dates, values } = trackerObj
 		const lastRecordDate = maxDate(dates)
@@ -215,13 +269,17 @@ export const GlobalContextProvider = ({ children }) => {
 				removeGroup,
 				trackers,
 				addTracker,
+				updateTrackerGroup,
 				removeTracker,
+				setTrackers,
 				records,
 				addRecord,
 				removeRecord,
+				setRecords,
 				trackersRecords,
 				trackersValues,
 				trackersStats,
+				UNASSIGNED_GROUP_NAME,
 			}}
 		>
 			{children}

@@ -1,13 +1,19 @@
-export const sum = array => array.reduce((acc, val) => +acc + +val, 0)
-export const diff = array => array.reduce((acc, val) => (acc -= val))
-export const aggr = array => array.reduce((acc, val) => (acc *= val))
-export const divide = array =>
-	array.reduce((acc, val) => (acc /= val))
-export const avg = array => sum(array) / array.length
-export const max = array => Math.max(...array)
-export const min = array => Math.min(...array)
+import { ReactText } from 'react'
 
-export const getDiff = array => {
+export const sum = (array: ReactText[]): number =>
+	array.reduce((acc: number, val) => +acc + +val, 0)
+export const diff = (array: number[]) =>
+	array.reduce((acc, val) => (acc -= val))
+export const aggr = (array: number[]) =>
+	array.reduce((acc, val) => (acc *= val))
+export const divide = (array: number[]) =>
+	array.reduce((acc, val) => (acc /= val))
+export const avg = (array: ReactText[] | number[]) =>
+	+sum(array) / array.length
+export const max = (array: number[]) => Math.max(...array)
+export const min = (array: number[]) => Math.min(...array)
+
+export const getDiff = (array: number[]) => {
 	const newArray = []
 	for (let i = 0; i < array.length - 1; i++) {
 		newArray.push(array[i + 1] - array[i] || 0)
@@ -16,7 +22,7 @@ export const getDiff = array => {
 	return newArray
 }
 
-export const getTotalDiff = array => {
+export const getTotalDiff = (array: number[]) => {
 	const newArray = []
 	for (let i = 0; i < array.length - 1; i++) {
 		newArray.push(array[i + 1] - array[0] || 0)
@@ -25,7 +31,7 @@ export const getTotalDiff = array => {
 	return newArray
 }
 
-export const getDiffPc = array => {
+export const getDiffPc = (array: number[]) => {
 	const newArray = []
 	for (let i = 0; i < array.length - 1; i++) {
 		newArray.push((array[i + 1] / array[i] - 1) * 100 || 0)
@@ -34,7 +40,7 @@ export const getDiffPc = array => {
 	return newArray
 }
 
-export const getTotalDiffPc = array => {
+export const getTotalDiffPc = (array: number[]) => {
 	const newArray = []
 	for (let i = 0; i < array.length - 1; i++) {
 		newArray.push((array[i + 1] / array[0] - 1) * 100 || 0)
@@ -43,7 +49,7 @@ export const getTotalDiffPc = array => {
 	return newArray
 }
 
-export const maxDiff = (array, calculation = 'diff') => {
+export const maxDiff = (array: number[], calculation = 'diff') => {
 	switch (calculation) {
 		case 'diff':
 			return Math.max(...getDiff(array))
@@ -57,7 +63,7 @@ export const maxDiff = (array, calculation = 'diff') => {
 			return null
 	}
 }
-export const minDiff = (array, calculation = 'diff') => {
+export const minDiff = (array: number[], calculation = 'diff') => {
 	switch (calculation) {
 		case 'diff':
 			return Math.min(...getDiff(array))
@@ -71,7 +77,7 @@ export const minDiff = (array, calculation = 'diff') => {
 			return null
 	}
 }
-export const avgDiff = (array, calculation = 'diff') => {
+export const avgDiff = (array: number[], calculation = 'diff') => {
 	switch (calculation) {
 		case 'diff':
 			return avg(getDiff(array))
