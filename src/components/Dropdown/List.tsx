@@ -7,14 +7,7 @@ import {
 	GroupName,
 	CheckmarkIcon,
 } from './StyledList'
-import Tracker from '../../interfaces/Tracker'
-interface ListPropsTypes {
-	isOpen: boolean
-	items: Tracker[]
-	selectItem: (item: Tracker) => void
-	headerTitle: string
-	showCheckmark: boolean
-}
+import { ListPropsTypes } from '../../interfaces/DropdownPropsTypes'
 
 const List = ({
 	isOpen,

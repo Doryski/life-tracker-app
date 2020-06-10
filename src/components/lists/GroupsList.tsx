@@ -4,6 +4,9 @@ import { Link as RouteLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
 import Group from '../../interfaces/Group'
+import updateTrackerGroup from '../../functions/updateTrackerGroup'
+import removeItem from '../../functions/removeItem'
+import { UNASSIGNED_GROUP_NAME } from '../../settings'
 
 const ListItem = styled.li`
 	display: grid;
@@ -21,75 +24,48 @@ const Button = styled.button``
 const GroupsList = () => {
 	const {
 		groups,
-		removeGroup,
+		groupsState,
 		trackers,
 		setTrackers,
-		addGroup,
-		updateTrackerGroup,
 		records,
 		setRecords,
-		UNASSIGNED_GROUP_NAME,
 	} = useContext(GlobalContext)
+	
 	const handleRemoveBtnClick = (group: Group) => {
-		let confirmation = window.confirm(
-			`Do you want to delete group ${group.name}?` +
-				' The trackers assigned to this group will be moved to Unassigned group.'
-		)
-
-		if (
-			confirmation &&
-			Boolean(
-				!groups.find(g => g.name === UNASSIGNED_GROUP_NAME)
+		if (group.name === UNASSIGNED_GROUP_NAME) {
+			let confirmation = window.confirm(
+				'Do you want to delete all trackers and records' +
+					' under group Unassigned?'
 			)
-		) {
-			removeGroup(group.name)
-			const updated = trackers.map(tracker =>
-				tracker.groupName === group.name
-					? updateTrackerGroup(tracker)
-					: { ...tracker }
-			)
-			setTrackers(updated)
-			addGroup(UNASSIGNED_GROUP_NAME)
-		} else if (
-			confirmation &&
-			Boolean(
-				groups.find(g => g.name === UNASSIGNED_GROUP_NAME)
-			) &&
-			group.name !== UNASSIGNED_GROUP_NAME
-		) {
-			removeGroup(group.name)
-			const updated = trackers.map(tracker =>
-				tracker.groupName === group.name
-					? updateTrackerGroup(tracker)
-					: { ...tracker }
-			)
-			setTrackers(updated)
-		} else if (
-			confirmation &&
-			group.name === UNASSIGNED_GROUP_NAME
-		) {
-			let confirmation2 = window.confirm(
-				'Deleting group Unassigned will cause deleting' +
-					'all records and trackers under this group.' +
-					'Do you want to proceed?'
-			)
-			if (confirmation2) {
-				// delete all trackers and records under this group
+			if (confirmation) {
+				// delete all trackers and records under group Unassigned
 				const updatedRecords = records.filter(record => {
 					const trackerGroupName = trackers.find(
 						t => t.id === record.trackerId
 					)?.groupName
-					return trackerGroupName === group.name
+					return trackerGroupName !== group.name
 				})
 				setRecords(updatedRecords)
 				const updatedTrackers = trackers.filter(
-					t => t.groupName === group.name
+					t => t.groupName !== group.name
 				)
 				setTrackers(updatedTrackers)
-				removeGroup(group.name)
 			}
 		} else {
-			return alert('else statement triggered')
+			let confirmation2 = window.confirm(
+				`Do you want to delete group ${group.name}?` +
+					' The trackers assigned to this group will be moved to Unassigned group.'
+			)
+			// move trackers to Unassigned group
+			if (confirmation2) {
+				const updated = trackers.map(tracker =>
+					tracker.groupName === group.name
+						? updateTrackerGroup(tracker)
+						: { ...tracker }
+				)
+				setTrackers(updated)
+				removeItem(group, 'name', groupsState)
+			}
 		}
 	}
 

@@ -1,5 +1,5 @@
 import Record from './Record'
 
 export default interface TrackerRecords {
-	[key: number]: { records: Record[] }
+	[key: string]: { records: Record[] }
 }

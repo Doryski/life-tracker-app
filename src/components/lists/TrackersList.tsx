@@ -8,6 +8,7 @@ import {
 import styled from 'styled-components'
 import { Close } from '@styled-icons/zondicons'
 import Tracker from '../../interfaces/Tracker'
+import removeItem from '../../functions/removeItem'
 
 const List = styled.ul``
 
@@ -25,9 +26,9 @@ const Link = styled(RouteLink)`
 const TrackersList = () => {
 	const {
 		trackers,
-		removeTracker,
 		records,
 		setRecords,
+		trackersState,
 	} = useContext(GlobalContext)
 	const location = useLocation()
 	const history = useHistory()
@@ -37,38 +38,36 @@ const TrackersList = () => {
 		)
 		if (confirmation) {
 			history.push(`/${tracker.groupName}`)
-			removeTracker(tracker.id)
 			const updatedRecords = records.filter(record => {
 				const trackerName = trackers.find(
 					t => t.id === record.trackerId
 				)?.name
-				return trackerName === tracker.name
+				return trackerName !== tracker.name
 			})
 			setRecords(updatedRecords)
+			removeItem(tracker, 'id', trackersState)
 		}
 	}
+	const filteredTrackers = trackers.filter(tracker =>
+		location.pathname.includes(tracker.groupName)
+	)
+
 	return (
 		<List>
-			{trackers
-				.filter(tracker =>
-					location.pathname.includes(tracker.groupName)
-				)
-				.map(tracker => (
-					<ListItem key={tracker.id}>
-						<Link
-							to={`/${tracker.groupName}/${tracker.name}`}
-						>
-							{tracker.name}
-						</Link>
-						<button
-							onClick={() =>
-								handleRemoveBtnClick(tracker)
-							}
-						>
-							<Close size='20' />
-						</button>
-					</ListItem>
-				))}
+			{filteredTrackers.map(tracker => (
+				<ListItem key={tracker.id}>
+					<Link
+						to={`/${tracker.groupName}/${tracker.name}`}
+					>
+						{tracker.name}
+					</Link>
+					<button
+						onClick={() => handleRemoveBtnClick(tracker)}
+					>
+						<Close size='20' />
+					</button>
+				</ListItem>
+			))}
 		</List>
 	)
 }

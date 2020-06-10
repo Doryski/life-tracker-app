@@ -1,5 +1,5 @@
 export default interface Tracker {
-    id: number
+    id: string
     groupName: string
     name: string
     unit: string

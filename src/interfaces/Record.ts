@@ -1,7 +1,7 @@
 export default interface Record {
-	id: number
-	trackerId: number
+	id: string
+	trackerId: string
 	dateCreated: string
-	value: number
+	value: string
 	note: string
 }

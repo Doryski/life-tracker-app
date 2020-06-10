@@ -9,11 +9,15 @@ import { GlobalContext } from '../../context/GlobalContext'
 const TrackerPage = () => {
 	const location = useLocation()
 	const { trackersStats } = useContext(GlobalContext)
-	const currentTracker = location.pathname.split('/')
+	const [
+		,
+		currentTrackerGroupName,
+		currentTrackerName,
+	] = location.pathname.split('/')
 	const currentTrackerStats = trackersStats.filter(
 		tracker =>
-			tracker.trackerName === currentTracker[2] &&
-			tracker.trackerGroupName === currentTracker[1]
+			tracker.trackerName === currentTrackerName &&
+			tracker.trackerGroupName === currentTrackerGroupName
 	)[0]
 
 	return (

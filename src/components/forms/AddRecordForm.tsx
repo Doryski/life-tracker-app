@@ -6,6 +6,7 @@ import Dropdown from '../Dropdown'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import Tracker from '../../interfaces/Tracker'
+import addRecord from '../../functions/addRecord'
 
 const Form = styled.form`
 	display: grid;
@@ -32,13 +33,13 @@ const Button = styled.button`
 `
 
 const AddRecordForm = () => {
-	const { trackers, addRecord } = useContext(GlobalContext)
+	const { trackers, recordsState } = useContext(GlobalContext)
 
-	const [selectedTracker, setSelectedTracker] = useState(0)
-	const headerInit = 'Select tracker...'
-	const [headerTitle, setHeaderTitle] = useState(headerInit)
+	const [selectedTracker, setSelectedTracker] = useState('')
+	const HEADER_INIT = 'Select tracker...'
+	const [headerTitle, setHeaderTitle] = useState(HEADER_INIT)
 	const [dateCreated, setDateCreated] = useState(new Date())
-	const [value, setValue] = useState(0)
+	const [value, setValue] = useState('')
 	const [note, setNote] = useState('')
 	const location = useLocation()
 
@@ -59,11 +60,17 @@ const AddRecordForm = () => {
 		if (!selectedTracker) alert('Select tracker to add record')
 		else if (!value) alert('Value cannot be empty')
 		else {
-			addRecord(selectedTracker, dateCreated, value, note)
-			setSelectedTracker(currentPageTracker.id)
-			setHeaderTitle(headerInit)
+			addRecord(
+				selectedTracker,
+				dateCreated,
+				value,
+				note,
+				recordsState
+			)
+			setSelectedTracker('')
+			setHeaderTitle(HEADER_INIT)
 			setDateCreated(new Date())
-			setValue(0)
+			setValue('')
 			setNote('')
 		}
 	}
@@ -72,7 +79,7 @@ const AddRecordForm = () => {
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const num = e.target.value
-		if (!num || num.match(/^\d{1,}(\.\d{0,2})?$/)) setValue(+num)
+		if (!num || num.match(/^\d{1,}(\.\d{0,2})?$/)) setValue(num)
 	}
 
 	const handleSelect = (item: Tracker) => {
@@ -92,15 +99,13 @@ const AddRecordForm = () => {
 			<Label>
 				Date
 				<DatePicker
-					onChange={date =>
-						setDateCreated(date)
-					}
+					onChange={date => setDateCreated(date)}
 					value={dateCreated}
 					format='dd.MM.y'
 				/>
 			</Label>
 			<Label>
-				value
+				Value
 				<Input
 					type='text'
 					value={value}
@@ -108,7 +113,7 @@ const AddRecordForm = () => {
 				/>
 			</Label>
 			<Label>
-				note
+				Note
 				<Input
 					type='text'
 					value={note}

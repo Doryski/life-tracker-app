@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { GlobalContext } from '../../context/GlobalContext'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import addTracker from '../../functions/addTracker'
 
 const Form = styled.form`
 	display: grid;
@@ -18,7 +19,9 @@ const Input = styled.input`
 `
 
 const AddTrackerForm = () => {
-	const { groups, addTracker, trackers } = useContext(GlobalContext)
+	const { groups, trackers, trackersState } = useContext(
+		GlobalContext
+	)
 	const location = useLocation()
 	const currentPageGroup = groups.filter(group =>
 		location.pathname.includes(`${group.name}`)
@@ -43,7 +46,12 @@ const AddTrackerForm = () => {
 		)
 			alert('Tracker of this name already exists')
 		else {
-			addTracker(selectedGroup, trackerName, unit)
+			addTracker(
+				selectedGroup,
+				trackerName,
+				unit,
+				trackersState
+			)
 			setSelectedGroup(currentPageGroup)
 			setTrackerName('')
 			setUnit('')

@@ -14,6 +14,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import Dropdown from '../Dropdown'
 import Tracker from '../../interfaces/Tracker'
+import { DATE_FORMAT } from '../../settings'
 
 const ChartWrapper = styled.div`
 	display: flex;
@@ -28,25 +29,29 @@ const ChartWrapper = styled.div`
 
 const BigChart = () => {
 	const { trackersRecords, trackers } = useContext(GlobalContext)
-	const [selectedTracker, setSelectedTracker] = useState(
-		trackers[0].id
-	)
-	const headerInit = 'Select tracker...'
-	const [headerTitle, setHeaderTitle] = useState(headerInit)
+	const [selectedTracker, setSelectedTracker] = useState('')
+	const HEADER_INIT = 'Select tracker...'
+	const [headerTitle, setHeaderTitle] = useState(HEADER_INIT)
 	const handleSelect = (item: Tracker) => {
 		setSelectedTracker(item.id)
 		setHeaderTitle(item.name)
 	}
-	const data = [
-		...trackersRecords[selectedTracker].records,
-	].sort((a, b) =>
-		moment(a.dateCreated, 'DD.MM.YYYY').diff(
-			moment(b.dateCreated, 'DD.MM.YYYY'),
-			'minutes'
-		) > 0
-			? 1
-			: -1
-	)
+
+	const data = selectedTracker
+		? [...trackersRecords[selectedTracker].records].sort(
+				(a, b) => {
+					const dateDifference = moment(
+						a.dateCreated,
+						DATE_FORMAT
+					).diff(
+						moment(b.dateCreated, DATE_FORMAT),
+						'minutes'
+					)
+
+					return dateDifference > 0 ? 1 : -1
+				}
+		  )
+		: []
 
 	return (
 		<ChartWrapper className='big-chart'>

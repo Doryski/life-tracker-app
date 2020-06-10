@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../../context/GlobalContext'
 import styled from 'styled-components'
+import { DATE_FORMAT } from '../../settings'
 
 const Wrapper = styled.div`
 	height: 90vh;
@@ -36,7 +37,7 @@ const Stats = () => {
 
 							<span>
 								{el.lastRecordDate.format(
-									'DD.MM.YYYY'
+									DATE_FORMAT
 								)}
 							</span>
 						</h5>

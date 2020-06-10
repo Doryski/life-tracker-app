@@ -1,9 +1,9 @@
 import { Moment } from 'moment'
 
 export default interface TrackerValues {
-	[key: number]: {
+	[key: string]: {
 		values: number[]
 		dates: Moment[]
-		ids: number[]
+		ids: string[]
 	}
 }

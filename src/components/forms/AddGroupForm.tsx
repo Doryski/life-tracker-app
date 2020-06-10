@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../../context/GlobalContext'
 import { Close } from '@styled-icons/zondicons'
 import styled from 'styled-components'
+import addItem from '../../functions/addItem'
 
 const Form = styled.form`
 	display: grid;
@@ -19,7 +20,7 @@ const AddGroupForm = ({
 }: {
 	setShowForm: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-	const { addGroup, groups } = useContext(GlobalContext)
+	const { groups, groupsState } = useContext(GlobalContext)
 	const [groupName, setGroupName] = useState('')
 	const handleSubmit = (e: any) => {
 		e.preventDefault()
@@ -29,7 +30,7 @@ const AddGroupForm = ({
 		else if (groups.find(group => group.name === groupName))
 			alert('Group of this name already exists')
 		else {
-			addGroup(groupName)
+			addItem({ name: groupName }, groupsState)
 			setGroupName('')
 			setShowForm(false)
 		}

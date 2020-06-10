@@ -1,4 +1,4 @@
-const map = (
+export default (
 	value: number,
 	minValue: number,
 	maxValue: number,
@@ -12,5 +12,3 @@ const map = (
 
 	return newValue
 }
-
-export default map

@@ -2,7 +2,7 @@ import { Moment } from 'moment'
 import { ReactText } from 'react'
 
 export default interface TrackerStat {
-	trackerId: number
+	trackerId: string
 	trackerName: string
 	trackerGroupName: string
 	lastRecordDate: Moment
