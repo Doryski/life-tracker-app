@@ -4,10 +4,10 @@ import moment, { Moment } from 'moment'
 import TrackerValues from '../interfaces/TrackersValues'
 import { DATE_FORMAT } from '../settings'
 
-const getTrackersValues = (
+export default function getTrackersValues(
 	trackers: Tracker[],
 	records: Record[]
-) => {
+) {
 	let returnObject: TrackerValues = {}
 	trackers.forEach(tracker => {
 		const currentId = tracker.id
@@ -25,4 +25,3 @@ const getTrackersValues = (
 	})
 	return returnObject
 }
-export default getTrackersValues

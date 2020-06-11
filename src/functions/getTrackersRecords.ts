@@ -2,10 +2,10 @@ import Tracker from '../interfaces/Tracker'
 import TrackerRecords from '../interfaces/TrackersRecords'
 import Record from '../interfaces/Record'
 
-const getTrackersRecords = (
+export default function getTrackersRecords(
 	trackers: Tracker[],
 	records: Record[]
-) => {
+) {
 	let trackersRecords: TrackerRecords = {}
 	trackers.forEach(tracker => {
 		const currentId = tracker.id
@@ -19,5 +19,3 @@ const getTrackersRecords = (
 	})
 	return trackersRecords
 }
-
-export default getTrackersRecords

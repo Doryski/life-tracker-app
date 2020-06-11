@@ -30,8 +30,8 @@ const GroupsList = () => {
 		records,
 		setRecords,
 	} = useContext(GlobalContext)
-	
-	const handleRemoveBtnClick = (group: Group) => {
+
+	function handleRemoveBtnClick(group: Group) {
 		if (group.name === UNASSIGNED_GROUP_NAME) {
 			let confirmation = window.confirm(
 				'Do you want to delete all trackers and records' +

@@ -15,14 +15,15 @@ const Input = styled.input`
 
 const Button = styled.button``
 
-const AddGroupForm = ({
-	setShowForm,
-}: {
+interface AddGroupFormProps {
 	setShowForm: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+}
+
+const AddGroupForm = ({ setShowForm }: AddGroupFormProps) => {
 	const { groups, groupsState } = useContext(GlobalContext)
 	const [groupName, setGroupName] = useState('')
-	const handleSubmit = (e: any) => {
+
+	function handleSubmit(e: any) {
 		e.preventDefault()
 		if (!groupName) alert('Group name cannot be null')
 		else if (!groupName.match(/^[a-zA-Z]+$/))

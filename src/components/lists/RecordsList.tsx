@@ -23,7 +23,7 @@ const RecordsList = () => {
 		GlobalContext
 	)
 	const location = useLocation()
-	const handleRemoveBtnClick = (record: Record) => {
+	function handleRemoveBtnClick(record: Record) {
 		let confirmation = window.confirm(
 			'Do you want to remove selected record?' +
 				`\nDate: ${record.dateCreated}` +

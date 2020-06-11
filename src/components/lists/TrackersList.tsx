@@ -32,7 +32,7 @@ const TrackersList = () => {
 	} = useContext(GlobalContext)
 	const location = useLocation()
 	const history = useHistory()
-	const handleRemoveBtnClick = (tracker: Tracker) => {
+	function handleRemoveBtnClick(tracker: Tracker) {
 		let confirmation = window.confirm(
 			`Do you want to delete tracker ${tracker.name} of group ${tracker.groupName} and all its records?`
 		)

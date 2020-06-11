@@ -23,20 +23,20 @@ const Stats = () => {
 	return (
 		<Wrapper>
 			{/* list of highest scores per every tracker vs latest */}
-			<h3>Highest vs latest</h3>
+			<h3 style={{ textAlign: 'center' }}>Highest vs latest</h3>
 			<List>
-				{trackersStats.map(el => (
-					<ListItem key={el.trackerId}>
+				{trackersStats.map(stat => (
+					<ListItem key={stat.trackerId}>
 						<h5
 							style={{
 								display: 'flex',
 								justifyContent: 'space-between',
 							}}
 						>
-							{el.trackerName}
+							{stat.trackerName}
 
 							<span>
-								{el.lastRecordDate.format(
+								{stat.lastRecordDate.format(
 									DATE_FORMAT
 								)}
 							</span>
@@ -48,15 +48,15 @@ const Stats = () => {
 								paddingTop: '.3em',
 							}}
 						>
-							{el.maxValue}
+							{stat.maxValue}
 							<span>vs </span>
-							{el.lastRecordValue}
+							{stat.lastRecordValue}
 							<small style={{ color: 'red' }}>
-								{el.diffLastVsMaxPc === '-'
+								{stat.diffLastVsMaxPc === '-'
 									? '-'
-									: +el.diffLastVsMaxPc === 0
+									: +stat.diffLastVsMaxPc === 0
 									? 'MAX'
-									: `${(+el.diffLastVsMaxPc).toFixed(
+									: `${(+stat.diffLastVsMaxPc).toFixed(
 											1
 									  )}%`}
 							</small>

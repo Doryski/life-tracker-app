@@ -4,8 +4,11 @@ import Record from '../interfaces/Record'
 import { max, min, avg, sum } from '../functions/array'
 import { max as maxDate, min as minDate } from 'moment'
 
-const getTrackersStats = (trackers: Tracker[], records: Record[]) =>
-	trackers.map(tracker => {
+export default function getTrackersStats(
+	trackers: Tracker[],
+	records: Record[]
+) {
+	return trackers.map(tracker => {
 		const trackersValues = getTrackersValues(trackers, records)
 		const trackerObj = trackersValues[tracker.id]
 		const { dates, values } = trackerObj
@@ -68,4 +71,4 @@ const getTrackersStats = (trackers: Tracker[], records: Record[]) =>
 			sumValue,
 		}
 	})
-export default getTrackersStats
+}

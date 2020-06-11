@@ -36,13 +36,17 @@ const AddTrackerForm = () => {
 		setSelectedGroup(currentPageGroup)
 	}, [currentPageGroup])
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 		if (!trackerName) alert('Tracker name cannot be null')
-		else if (!trackerName.match(/^[a-zA-Z0-9]+$/))
+		else if (!trackerName.match(/^[a-zA-Z]+$/))
 			alert('Tracker name can only inlude letters')
 		else if (
-			trackers.find(tracker => tracker.name === trackerName)
+			trackers.find(
+				tracker =>
+					tracker.name.toLowerCase() ===
+					trackerName.toLowerCase()
+			)
 		)
 			alert('Tracker of this name already exists')
 		else {

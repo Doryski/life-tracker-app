@@ -14,7 +14,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import Dropdown from '../Dropdown'
 import Tracker from '../../interfaces/Tracker'
-import { DATE_FORMAT } from '../../settings'
+import { DATE_FORMAT, SELECT_TRACKER_HEADER } from '../../settings'
 
 const ChartWrapper = styled.div`
 	display: flex;
@@ -30,8 +30,9 @@ const ChartWrapper = styled.div`
 const BigChart = () => {
 	const { trackersRecords, trackers } = useContext(GlobalContext)
 	const [selectedTracker, setSelectedTracker] = useState('')
-	const HEADER_INIT = 'Select tracker...'
-	const [headerTitle, setHeaderTitle] = useState(HEADER_INIT)
+	const [headerTitle, setHeaderTitle] = useState(
+		SELECT_TRACKER_HEADER
+	)
 	const handleSelect = (item: Tracker) => {
 		setSelectedTracker(item.id)
 		setHeaderTitle(item.name)

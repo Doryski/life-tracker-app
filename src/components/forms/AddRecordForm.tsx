@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useEffect } from 'react'
 import Tracker from '../../interfaces/Tracker'
 import addRecord from '../../functions/addRecord'
+import { SELECT_TRACKER_HEADER } from '../../settings'
 
 const Form = styled.form`
 	display: grid;
@@ -36,8 +37,9 @@ const AddRecordForm = () => {
 	const { trackers, recordsState } = useContext(GlobalContext)
 
 	const [selectedTracker, setSelectedTracker] = useState('')
-	const HEADER_INIT = 'Select tracker...'
-	const [headerTitle, setHeaderTitle] = useState(HEADER_INIT)
+	const [headerTitle, setHeaderTitle] = useState(
+		SELECT_TRACKER_HEADER
+	)
 	const [dateCreated, setDateCreated] = useState(new Date())
 	const [value, setValue] = useState('')
 	const [note, setNote] = useState('')
@@ -54,7 +56,7 @@ const AddRecordForm = () => {
 			setSelectedTracker(currentPageTracker.id)
 	}, [location.pathname, currentPageTracker])
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 
 		if (!selectedTracker) alert('Select tracker to add record')
@@ -68,16 +70,14 @@ const AddRecordForm = () => {
 				recordsState
 			)
 			setSelectedTracker('')
-			setHeaderTitle(HEADER_INIT)
+			setHeaderTitle(SELECT_TRACKER_HEADER)
 			setDateCreated(new Date())
 			setValue('')
 			setNote('')
 		}
 	}
 
-	const onValueChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
+	function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
 		const num = e.target.value
 		if (!num || num.match(/^\d{1,}(\.\d{0,2})?$/)) setValue(num)
 	}
