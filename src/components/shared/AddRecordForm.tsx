@@ -99,9 +99,7 @@ const AddRecordForm = () => {
 			<Label>
 				Date
 				<DatePicker
-					onChange={date => {
-						setDateCreated(date)
-					}}
+					onChange={date => setDateCreated(date)}
 					value={dateCreated}
 					format='dd.MM.y'
 				/>
