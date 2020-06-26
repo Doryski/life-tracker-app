@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Header from './Header'
 import List from './List'
 import { Wrapper } from './StyledHeader'
-import { DropdownPropsTypes } from '../../interfaces/DropdownPropsTypes'
+import { DropdownPropsTypes } from '../../../interfaces/DropdownPropsTypes'
 
 const Dropdown = ({
 	values = [],

@@ -7,7 +7,7 @@ import {
 	GroupName,
 	CheckmarkIcon,
 } from './StyledList'
-import { ListPropsTypes } from '../../interfaces/DropdownPropsTypes'
+import { ListPropsTypes } from '../../../interfaces/DropdownPropsTypes'
 
 const List = ({
 	isOpen,

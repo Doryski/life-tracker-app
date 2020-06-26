@@ -1,7 +1,7 @@
 import React from 'react'
-import LeftNav from '../LeftNav'
-import PageWrapper from '../StyledComponents/PageWrapper'
-import UnderDev from '../StyledComponents/UnderDev'
+import LeftNav from '../shared/LeftNav'
+import PageWrapper from '../shared/StyledComponents/PageWrapper'
+import UnderDev from '../shared/StyledComponents/UnderDev'
 
 const ChartsPage = () => {
 	return (

@@ -12,7 +12,7 @@ import {
 } from 'recharts'
 import moment from 'moment'
 import styled from 'styled-components'
-import Dropdown from '../Dropdown'
+import Dropdown from '../shared/Dropdown'
 import Tracker from '../../interfaces/Tracker'
 import { DATE_FORMAT, SELECT_TRACKER_HEADER } from '../../settings'
 

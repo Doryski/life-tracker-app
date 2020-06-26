@@ -1,8 +1,8 @@
 import React from 'react'
-import LeftNav from '../LeftNav'
-import AddTrackerForm from '../forms/AddTrackerForm'
-import PageWrapper from '../StyledComponents/PageWrapper'
-import UnderDev from '../StyledComponents/UnderDev'
+import LeftNav from '../shared/LeftNav'
+import AddTrackerForm from '../shared/AddTrackerForm'
+import PageWrapper from '../shared/StyledComponents/PageWrapper'
+import UnderDev from '../shared/StyledComponents/UnderDev'
 import styled from 'styled-components'
 
 const MainSection = styled.section`

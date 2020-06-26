@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import GroupsList from '../lists/GroupsList'
-import TrackersList from '../lists/TrackersList'
+import GroupsList from '../GroupsList'
+import TrackersList from '../TrackersList'
 import { useLocation } from 'react-router-dom'
-import AddGroupForm from '../forms/AddGroupForm'
+import AddGroupForm from '../AddGroupForm'
 import { useState } from 'react'
 
 const Wrapper = styled.div`

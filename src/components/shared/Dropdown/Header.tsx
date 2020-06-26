@@ -1,7 +1,7 @@
 import React from 'react'
 import { CheveronUp, CheveronDown } from '@styled-icons/zondicons'
 import { StyledHeader } from './StyledHeader'
-import { HeaderPropsTypes } from '../../interfaces/DropdownPropsTypes'
+import { HeaderPropsTypes } from '../../../interfaces/DropdownPropsTypes'
 
 const Header = ({ headerTitle, isOpen }: HeaderPropsTypes) => {
 	const ICON_SIZE = '26'
