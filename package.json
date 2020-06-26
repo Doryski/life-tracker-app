@@ -7,6 +7,10 @@
         "@testing-library/react": "^9.5.0",
         "@testing-library/user-event": "^7.2.1"
     },
+    "engines": {
+        "node": "10.16.0",
+        "npm": "6.9.0"
+    },
     "dependencies": {
         "@styled-icons/zondicons": "^10.0.0",
         "@types/jest": "^25.2.3",
