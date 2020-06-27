@@ -87,6 +87,11 @@ const AddRecordForm = () => {
 		setHeaderTitle(item.name)
 	}
 
+	const handleDateChange = (date: Date | Date[]) => {
+		if (date instanceof Date) {
+			return setDateCreated(date)
+		}
+	}
 	return (
 		<Form onSubmit={handleSubmit} location={location}>
 			{location.pathname === '/' && (
@@ -99,7 +104,7 @@ const AddRecordForm = () => {
 			<Label>
 				Date
 				<DatePicker
-					onChange={date => setDateCreated(date)}
+					onChange={handleDateChange}
 					value={dateCreated}
 					format='dd.MM.y'
 				/>
